@@ -25,8 +25,9 @@ export default function Book(props: any) {
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ params }) => {
+            const apiPath = process.env.API_URL;
             if (params?.id) {
-                const response: AxiosResponse<BookState> = await axios.get(`http://localhost:3000/api/book?id=${params.id}`);
+                const response: AxiosResponse<BookState> = await axios.get(`${apiPath}/api/book?id=${params.id}`);
                 store.dispatch(setBook(response.data));
                 return {
                     props: {

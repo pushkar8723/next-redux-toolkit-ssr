@@ -29,8 +29,9 @@ export default function Home(props: any) {
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ query }) => {
+            const apiPath = process.env.API_URL;
             if (query.q) {
-                const response = await axios.get('http://localhost:3000/api/bookList');
+                const response = await axios.get(`${apiPath}/api/bookList`);
                 store.dispatch(setList(response.data));
             } else {
                 store.dispatch(setList({}));
