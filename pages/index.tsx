@@ -31,7 +31,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ query }) => {
             const apiPath = process.env.API_URL;
             if (query.q) {
-                const response = await axios.get(`${apiPath}/api/bookList`);
+                const response = await axios.get(`${apiPath}/api/bookList`, {
+                    headers: {
+                        'Accept-Encoding': 'gzip, compress, deflate'
+                    }
+                });
                 store.dispatch(setList(response.data));
             } else {
                 store.dispatch(setList({}));

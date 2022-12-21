@@ -27,7 +27,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ params }) => {
             const apiPath = process.env.API_URL;
             if (params?.id) {
-                const response: AxiosResponse<BookState> = await axios.get(`${apiPath}/api/book?id=${params.id}`);
+                const response: AxiosResponse<BookState> = await axios.get(`${apiPath}/api/book?id=${params.id}`, {
+                    headers: {
+                        'Accept-Encoding': 'gzip, compress, deflate'
+                    }
+                });
                 store.dispatch(setBook(response.data));
                 return {
                     props: {
