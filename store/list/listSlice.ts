@@ -3,28 +3,30 @@ import { AppState } from "../store";
 import { HYDRATE } from "next-redux-wrapper";
 
 // Type for our state
-export type BookState = {
-    id: string;
-    volumeInfo: {
-        title: string;
-        subtitle: string;
-        description: string;
-        authors: string[];
-    }
-} | null;
+export interface ListState {
+    items: {
+        id: string;
+        volumeInfo: {
+            title: string;
+            subtitle: string;
+        }
+    }[];
+}
 
 // Initial state
-const initialState: BookState = null;
+const initialState: ListState = {
+    items: [],
+};
 
-const name = "book";
+const name = "list";
 
 // Actual Slice
-export const bookSlice = createSlice<BookState, SliceCaseReducers<BookState>,typeof name>({
+export const listSlice = createSlice<ListState, SliceCaseReducers<ListState>,typeof name>({
     name,
     initialState,
     reducers: {
         // Action to set the authentication status
-        setBook(state, action) {
+        setList(state, action) {
             return {
                 ...state,
                 ...action.payload
@@ -43,8 +45,8 @@ export const bookSlice = createSlice<BookState, SliceCaseReducers<BookState>,typ
     },
 });
 
-export const { setBook } = bookSlice.actions;
+export const { setList } = listSlice.actions;
 
-export const selectBook = (state: AppState) => state[name];
+export const selectList = (state: AppState) => state[name];
 
-export default bookSlice.reducer;
+export default listSlice.reducer;
