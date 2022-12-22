@@ -1,9 +1,34 @@
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { selectList, setList } from '../store/list/listSlice';
 import { wrapper } from '../store/store';
+import styled from 'styled-components';
+
+const ListItem = styled.div`
+    padding: 5px 15px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+
+    &:hover {
+        background-color: #f2f2f2;
+    }
+`;
+
+const ImgContainer = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    & img {
+        margin-bottom: -69px;
+    }
+`;
 
 export default function Home(props: any) {
     const list = useSelector(selectList);
@@ -12,16 +37,17 @@ export default function Home(props: any) {
             <Head>
                 <title>{`${props.title} - Book`}</title>
             </Head>
-            <main>
-                {list.items.map(item =>  (
-                    <div key={item.id}>
-                        <Link href={`/book/${encodeURIComponent(item.id)}`}>
-                            <h3>{item.volumeInfo.title}</h3>
-                            <p>{item.volumeInfo.subtitle}</p>
-                        </Link>
-                    </div>
-                ))}
-            </main>
+            {list.items.length ? list.items.map(item =>  (
+                <Link  key={item.id} href={`/book/${encodeURIComponent(item.id)}`}>
+                    <ListItem>
+                        <h3>{item.volumeInfo.title}</h3>
+                        <p>{item.volumeInfo.subtitle}</p>
+                    </ListItem>
+                </Link>
+            )) : <ImgContainer>
+                <img src="https://books-search.netlify.app/images/search_86dd85.gif" alt='Empty Result' /><br/>
+                Search a book to begin...
+            </ImgContainer>}
         </>
     )
 }
@@ -31,7 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ query }) => {
             const apiPath = process.env.API_URL;
             if (query.q) {
-                const response = await axios.get(`${apiPath}/api/bookList`, {
+                const response = await axios.get(`${apiPath}/api/bookList?q=${query.q}`, {
                     headers: {
                         'Accept-Encoding': 'gzip, compress, deflate'
                     }

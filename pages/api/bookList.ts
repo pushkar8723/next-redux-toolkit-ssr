@@ -7,6 +7,6 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const resp = await axios.get('https://www.googleapis.com/books/v1/volumes?q=Harry');
+    const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${req?.query?.q || ''}`);
     res.status(200).json(resp.data);
 }

@@ -1,4 +1,4 @@
-import { createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
 import { AppState } from "../store";
 import { HYDRATE } from "next-redux-wrapper";
 
@@ -35,13 +35,13 @@ export const listSlice = createSlice<ListState, SliceCaseReducers<ListState>,typ
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase<typeof HYDRATE, PayloadAction<any, typeof HYDRATE>>(HYDRATE, (state, action) => {
             return {
                 ...state,
                 ...action.payload[name],
             };
-        },
+        })
     },
 });
 
