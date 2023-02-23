@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { selectList, setList } from '../store/list/listSlice';
 import { wrapper } from '../store/store';
