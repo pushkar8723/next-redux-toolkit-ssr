@@ -36,7 +36,7 @@ export default function Home(props: any) {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-             setUserAgent(window.navigator.userAgent);   
+            setUserAgent(window.navigator.userAgent);   
         }
     }, []);
     
