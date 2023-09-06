@@ -32,7 +32,7 @@ const ImgContainer = styled.div`
 
 export default function Home(props: any) {
     const list = useSelector(selectList);
-    const [userAgent, setUserAgent] = useState();
+    const [userAgent, setUserAgent] = useState('');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
