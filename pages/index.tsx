@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -31,11 +32,20 @@ const ImgContainer = styled.div`
 
 export default function Home(props: any) {
     const list = useSelector(selectList);
+    const [userAgent, setUserAgent] = useState();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+             setUserAgent(window.navigator.userAgent);   
+        }
+    }, []);
+    
     return (
         <>
             <Head>
                 <title>{`${props.title} - Book`}</title>
             </Head>
+            <div>{userAgent}</div>
             {list.items.length ? list.items.map(item =>  (
                 <Link  key={item.id} href={`/book/${encodeURIComponent(item.id)}`}>
                     <ListItem>
