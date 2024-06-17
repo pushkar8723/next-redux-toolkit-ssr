@@ -33,10 +33,12 @@ const ImgContainer = styled.div`
 export default function Home(props: any) {
     const list = useSelector(selectList);
     const [userAgent, setUserAgent] = useState('');
+    const [reducedMotion, setReducedMotion] = useState(null);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setUserAgent(window.navigator.userAgent);   
+            setUserAgent(window.navigator.userAgent);
+            setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
         }
     }, []);
     
@@ -46,6 +48,7 @@ export default function Home(props: any) {
                 <title>{`${props.title} - Book`}</title>
             </Head>
             <div>{userAgent}</div>
+            <div>{reducedMotion}</div>
             {list.items.length ? list.items.map(item =>  (
                 <Link  key={item.id} href={`/book/${encodeURIComponent(item.id)}`}>
                     <ListItem>
