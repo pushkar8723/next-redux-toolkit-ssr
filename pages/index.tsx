@@ -33,7 +33,7 @@ const ImgContainer = styled.div`
 export default function Home(props: any) {
     const list = useSelector(selectList);
     const [userAgent, setUserAgent] = useState('');
-    const [reducedMotion, setReducedMotion] = useState(null);
+    const [reducedMotion, setReducedMotion] = useState(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
